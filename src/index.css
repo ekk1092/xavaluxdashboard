@@ -1,0 +1,97 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+:root {
+  --app-bg: #ffffff;
+  --app-text: #0f172a;
+  --panel-bg: #ffffff;
+  --muted: #6b7280;
+  --panel-border: #e6e7ee;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-text: #ffffff;
+  --panel-hover: #f3f4f6;
+}
+
+[data-theme="dark"] {
+  --app-bg: #0b1220;
+  --app-text: #e5e7eb;
+  --panel-bg: #0f172a;
+  --muted: #9ca3af;
+  --panel-border: #2d313f;
+  --accent: #2563eb;
+  --accent-hover: #1e40af;
+  --accent-text: #ffffff;
+  --panel-hover: #1f232e;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.animate-in {
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.zoom-in-95 {
+  animation-name: zoomIn95;
+}
+
+.slide-in-from-top-4 {
+  animation-name: slideInFromTop4;
+}
+
+.duration-200 {
+  animation-duration: 200ms;
+}
+
+.duration-300 {
+  animation-duration: 300ms;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn95 {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromTop4 {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
