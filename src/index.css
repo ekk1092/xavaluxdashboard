@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
 html,
 body,
 #root {
@@ -14,6 +17,23 @@ body,
   --accent-hover: #1d4ed8;
   --accent-text: #ffffff;
   --panel-hover: #f3f4f6;
+  --success-bg: rgba(34, 197, 94, 0.1);
+  --success-border: rgba(34, 197, 94, 0.4);
+  --success-text: #166534;
+  --warning-bg: rgba(234, 179, 8, 0.1);
+  --warning-border: rgba(234, 179, 8, 0.4);
+  --warning-text: #854d0e;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --status-good: #22c55e;
+  --status-low: #ef4444;
+  --status-processing: #3b82f6;
+  --status-pending: #eab308;
+  --status-cancelled: #ef4444;
+  --chart-bar: rgba(37, 99, 235, 0.2);
+  --chart-bar-hover: #3b82f6;
+  --chart-bar-top: #3b82f6;
+  --icon-bg: #f3f4f6;
 }
 
 [data-theme="dark"] {
@@ -26,12 +46,30 @@ body,
   --accent-hover: #1e40af;
   --accent-text: #ffffff;
   --panel-hover: #1f232e;
+  --success-bg: rgba(34, 197, 94, 0.1);
+  --success-border: rgba(34, 197, 94, 0.4);
+  --success-text: #bbf7d0;
+  --warning-bg: rgba(234, 179, 8, 0.1);
+  --warning-border: rgba(234, 179, 8, 0.4);
+  --warning-text: #fef08a;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --status-good: #22c55e;
+  --status-low: #ef4444;
+  --status-processing: #3b82f6;
+  --status-pending: #eab308;
+  --status-cancelled: #ef4444;
+  --chart-bar: rgba(37, 99, 235, 0.2);
+  --chart-bar-hover: #3b82f6;
+  --chart-bar-top: #3b82f6;
+  --icon-bg: #1e293b;
 }
 
 body {
   margin: 0;
   background: var(--app-bg);
   color: var(--app-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 * {

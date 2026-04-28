@@ -1,6 +1,9 @@
 import { Search } from 'lucide-react';
+import { useData } from '../../context/DataContext.jsx';
 
 export default function Header({ t, profile }) {
+  const { searchQuery, setSearchQuery } = useData();
+
   return (
     <header
       className="px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0 backdrop-blur-sm sticky top-0 z-20"
@@ -10,6 +13,8 @@ export default function Header({ t, profile }) {
         <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--muted)' }} />
         <input
           type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('header_search')}
           aria-label={t('header_search')}
           className="w-full border-none rounded-full py-2.5 pl-12 pr-4 focus:outline-none"

@@ -1,38 +1,69 @@
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import CreateOrderModal from '../modals/CreateOrderModal.jsx';
+import { useData } from '../../context/DataContext.jsx';
 
 export default function OrdersPage({ t }) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [activeOrderTab, setActiveOrderTab] = useState('all');
+  const { orders, searchQuery } = useData();
 
-  const orders = [
-    { id: 'ORD-2023-089', date: 'Oct 24, 2023', customer: 'BuildTech Industries', amount: '$4,250.00', status: t('completed') },
-    { id: 'ORD-2023-090', date: 'Oct 25, 2023', customer: 'Apex Construction', amount: '$1,820.00', status: t('processing') },
-    { id: 'ORD-2023-091', date: 'Oct 25, 2023', customer: 'Global Supply Co.', amount: '$9,400.00', status: t('pending') },
-    { id: 'ORD-2023-092', date: 'Oct 26, 2023', customer: 'Metro Developers', amount: '$650.00', status: t('cancelled') },
+  const handleCloseModal = useCallback(() => setIsCreateModalOpen(false), []);
+
+  const mappedOrders = orders.map(o => ({
+    ...o,
+    statusLabel: t(o.status) || o.status
+  }));
+
+  const searchedOrders = mappedOrders.filter(o => 
+    o.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    o.customer.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const tabs = [
+    { id: 'all', label: t('all_orders') },
+    { id: 'pending', label: t('pending') },
+    { id: 'processing', label: t('processing') },
+    { id: 'completed', label: t('completed') },
   ];
 
-  
+  const filteredOrders = activeOrderTab === 'all' ? searchedOrders : searchedOrders.filter((o) => o.status === activeOrderTab);
+
+  const getStatusStyle = (status) => {
+    const map = {
+      completed: { color: 'var(--status-good)', bg: 'rgba(34, 197, 94, 0.1)', border: 'rgba(34, 197, 94, 0.3)' },
+      processing: { color: 'var(--status-processing)', bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.3)' },
+      pending: { color: 'var(--status-pending)', bg: 'rgba(234, 179, 8, 0.1)', border: 'rgba(234, 179, 8, 0.3)' },
+      cancelled: { color: 'var(--status-cancelled)', bg: 'rgba(239, 68, 68, 0.1)', border: 'rgba(239, 68, 68, 0.3)' },
+    };
+    const s = map[status] || map.pending;
+    return { color: s.color, backgroundColor: s.bg, border: `1px solid ${s.border}` };
+  };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 pb-8 animate-in fade-in duration-300">
-      <CreateOrderModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} t={t} />
+      <CreateOrderModal isOpen={isCreateModalOpen} onClose={handleCloseModal} t={t} />
 
       <div className="flex justify-between items-end mb-8">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--app-text)' }}>{t('orders_title')}</h1>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('orders_subtitle')}</p>
         </div>
-        <button onClick={() => setIsCreateModalOpen(true)} className="px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium" style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}>
+        <button onClick={() => setIsCreateModalOpen(true)} className="px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium transition-colors" style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}>
           <Plus className="w-5 h-5" />
           <span>{t('create_order')}</span>
         </button>
       </div>
 
       <div className="flex space-x-6 mb-6" style={{ borderBottom: '1px solid var(--panel-border)' }}>
-        {[t('all_orders'), t('pending'), t('processing'), t('completed')].map((tab, index) => (
-          <button key={tab} className="pb-4 px-2 font-medium text-sm" style={index === 0 ? { borderBottom: '2px solid var(--accent)', color: 'var(--accent)' } : { color: 'var(--muted)' }}>
-            {tab}
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveOrderTab(tab.id)}
+            className="pb-4 px-2 font-medium text-sm transition-colors"
+            style={activeOrderTab === tab.id ? { borderBottom: '2px solid var(--accent)', color: 'var(--accent)' } : { color: 'var(--muted)' }}
+          >
+            {tab.label}
           </button>
         ))}
       </div>
@@ -50,26 +81,35 @@ export default function OrdersPage({ t }) {
                 <th className="px-6 py-4 font-medium text-right">{t('actions')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y" style={{ borderColor: 'var(--panel-border)' }}>
-              {orders.map((order) => (
-                <tr
-                  key={order.id}
-                  className="transition-colors group"
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--panel-hover)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
-                >
-                  <td className="px-6 py-4 font-medium text-white">{order.id}</td>
-                  <td className="px-6 py-4 text-gray-300">{order.date}</td>
-                  <td className="px-6 py-4 text-gray-300">{order.customer}</td>
-                  <td className="px-6 py-4 text-gray-300 font-medium">{order.amount}</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 rounded-full text-xs font-medium" style={{ border: '1px solid var(--panel-border)', color: 'var(--muted)' }}>{order.status}</span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="font-medium text-sm" style={{ color: 'var(--muted)' }}>{t('view_details')}</button>
+            <tbody>
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center" style={{ color: 'var(--muted)' }}>
+                    {t('no_orders_found') || 'No orders found for this filter.'}
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredOrders.map((order) => (
+                  <tr
+                    key={order.id}
+                    className="transition-colors"
+                    style={{ borderBottom: '1px solid var(--panel-border)' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--panel-hover)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
+                  >
+                    <td className="px-6 py-4 font-medium" style={{ color: 'var(--app-text)' }}>{order.id}</td>
+                    <td className="px-6 py-4" style={{ color: 'var(--app-text)' }}>{order.date}</td>
+                    <td className="px-6 py-4" style={{ color: 'var(--app-text)' }}>{order.customer}</td>
+                    <td className="px-6 py-4 font-medium" style={{ color: 'var(--app-text)' }}>{order.amount}</td>
+                    <td className="px-6 py-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium" style={getStatusStyle(order.status)}>{order.statusLabel}</span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="font-medium text-sm" style={{ color: 'var(--accent)' }}>{t('view_details')}</button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
