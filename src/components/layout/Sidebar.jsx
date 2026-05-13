@@ -1,7 +1,10 @@
-import { Box, ClipboardList, Layers, LayoutDashboard, Settings as SettingsIcon } from 'lucide-react';
+import { Box, ClipboardList, Layers, LayoutDashboard, LogOut, Settings as SettingsIcon } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../context/useAuth.js';
 
 export default function Sidebar({ t }) {
+  const { user, logout } = useAuth();
+
   const navItems = [
     { id: 'dashboard', path: '/', label: t('nav_dashboard'), icon: LayoutDashboard },
     { id: 'inventory', path: '/inventory', label: t('nav_inventory'), icon: Box },
@@ -41,10 +44,26 @@ export default function Sidebar({ t }) {
         })}
       </nav>
 
-      <div className="p-4 mt-auto hidden lg:block">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold" style={{ backgroundColor: 'var(--panel-border)', color: 'var(--muted)' }}>
-          A
+      <div className="p-4 mt-auto hidden lg:flex items-center justify-between">
+        <div className="flex items-center space-x-2 min-w-0">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ backgroundColor: 'var(--panel-border)', color: 'var(--muted)' }}>
+            {user?.firstName?.[0] || 'X'}
+          </div>
+          <span className="text-sm font-medium truncate" style={{ color: 'var(--app-text)' }}>
+            {user ? `${user.firstName} ${user.lastName[0]}.` : ''}
+          </span>
         </div>
+        <button
+          onClick={logout}
+          className="p-2 rounded-lg transition-colors flex-shrink-0"
+          style={{ color: 'var(--muted)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--danger)'; e.currentTarget.style.backgroundColor = 'var(--panel-hover)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
+          title={t('logout')}
+          aria-label={t('logout')}
+        >
+          <LogOut className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );

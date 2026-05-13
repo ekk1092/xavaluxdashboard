@@ -4,12 +4,15 @@ import Header from './components/layout/Header.jsx';
 import Sidebar from './components/layout/Sidebar.jsx';
 import DashboardPage from './components/pages/DashboardPage.jsx';
 import InventoryPage from './components/pages/InventoryPage.jsx';
+import LoginPage from './components/pages/LoginPage.jsx';
 import OrdersPage from './components/pages/OrdersPage.jsx';
 import SettingsPage from './components/settings/SettingsPage.jsx';
+import { useAuth } from './context/useAuth.js';
 import { createTranslator } from './i18n/translations.js';
 import { loadSettings, SETTINGS_STORAGE_KEY } from './settings/persistence.js';
 
 export default function App() {
+  const { isAuthenticated } = useAuth();
   const [settings, setSettings] = useState(() => loadSettings());
 
   useEffect(() => {
@@ -32,6 +35,10 @@ export default function App() {
   }, [settings.system.language]);
 
   const t = useMemo(() => createTranslator(settings.system.language), [settings.system.language]);
+
+  if (!isAuthenticated) {
+    return <LoginPage t={t} />;
+  }
 
   return (
     <div
