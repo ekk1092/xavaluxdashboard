@@ -61,10 +61,10 @@ export default function SettingsPage({ t, settings, onSettingsChange }) {
   };
 
   const tabs = [
-    { id: 'profile', label: t('profile'), icon: User },
-    { id: 'notifications', label: t('notifications'), icon: Bell },
-    { id: 'security', label: t('security'), icon: Shield },
-    { id: 'system', label: t('system'), icon: Monitor },
+    { id: 'profile', label: t('tab_profile'), icon: User },
+    { id: 'notifications', label: t('tab_notifications'), icon: Bell },
+    { id: 'security', label: t('tab_security'), icon: Shield },
+    { id: 'system', label: t('tab_system'), icon: Monitor },
   ];
 
   return (
