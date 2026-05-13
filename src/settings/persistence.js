@@ -2,9 +2,9 @@ export const SETTINGS_STORAGE_KEY = 'xavalux.settings.v1';
 
 export const DEFAULT_SETTINGS = {
   profile: {
-    firstName: 'Alex',
-    lastName: 'Mercer',
-    email: 'alex.mercer@xavalux.com',
+    firstName: 'Xavier',
+    lastName: 'Aholou',
+    email: 'xav.aholou@xavalux.com',
     role: 'Warehouse Supervisor',
   },
   notifications: {

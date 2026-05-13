@@ -4,6 +4,6 @@ import App from './App.jsx';
 describe('App', () => {
   it('renders dashboard heading', () => {
     render(<App />);
-    expect(screen.getByText('Welcome Back, Alex')).toBeInTheDocument();
+    expect(screen.getByText('Welcome Back, Xavier')).toBeInTheDocument();
   });
 });

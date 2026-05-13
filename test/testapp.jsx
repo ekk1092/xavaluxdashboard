@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Box, 
-  ClipboardList, 
-  Settings as SettingsIcon, 
-  Search, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  ChevronDown, 
+import {
+  LayoutDashboard,
+  Box,
+  ClipboardList,
+  Settings as SettingsIcon,
+  Search,
+  Plus,
+  Edit,
+  Trash2,
+  ChevronDown,
   Activity,
   TrendingUp,
   Package,
@@ -151,11 +151,10 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex-shrink-0 lg:w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                isActive 
-                  ? 'bg-blue-600 text-white' 
-                  : 'hover:bg-[#1f222e] text-gray-400 hover:text-gray-200'
-              }`}
+              className={`flex-shrink-0 lg:w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                ? 'bg-blue-600 text-white'
+                : 'hover:bg-[#1f222e] text-gray-400 hover:text-gray-200'
+                }`}
             >
               <Icon className="w-5 h-5" />
               <span className="font-medium">{item.label}</span>
@@ -177,14 +176,14 @@ const Header = () => (
   <header className="px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0 border-b border-[#1f222e]/60 bg-[#13151f]/80 backdrop-blur-sm sticky top-0 z-20">
     <div className="relative w-full sm:w-96">
       <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-      <input 
-        type="text" 
-        placeholder="Search by SKU, Name, Finish..." 
+      <input
+        type="text"
+        placeholder="Search by SKU, Name, Finish..."
         aria-label="Search inventory"
         className="w-full bg-[#1f222e] text-gray-300 border-none rounded-full py-2.5 pl-12 pr-4 focus:outline-none focus:ring-1 focus:ring-blue-500"
       />
     </div>
-    
+
     <div className="flex items-center space-x-4">
       <div className="text-right hidden md:block">
         <div className="text-sm font-medium text-gray-300">Warehouse Supervisor</div>
@@ -257,7 +256,7 @@ const AddStockModal = ({ isOpen, onClose }) => {
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-400 mb-2">SKU / Référence (Depuis le catalogue)</label>
               <div className="relative">
-                <select 
+                <select
                   value={selectedSku}
                   onChange={handleSkuChange}
                   className="w-full appearance-none bg-[#11131a] border border-[#2d313f] text-white rounded-lg pl-4 pr-10 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
@@ -270,18 +269,18 @@ const AddStockModal = ({ isOpen, onClose }) => {
                 <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" />
               </div>
             </div>
-            
+
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-400 mb-2">Nom de l'article</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
-                placeholder="Saisi automatiquement..." 
-                className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                placeholder="Saisi automatiquement..."
+                className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-2">Finition / Couleur</label>
               <div className="relative">
@@ -294,15 +293,15 @@ const AddStockModal = ({ isOpen, onClose }) => {
                 <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-2">Épaisseur / Dimensions</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={dimensions}
                 onChange={(e) => setDimensions(e.target.value)}
-                placeholder="ex: 1.0" 
-                className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                placeholder="ex: 1.0"
+                className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
@@ -317,12 +316,12 @@ const AddStockModal = ({ isOpen, onClose }) => {
                 <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-2">Stock Initial</label>
               <input type="text" placeholder="ex: 100 ft" className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
             </div>
-            
+
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-400 mb-2">Statut</label>
               <div className="relative">
@@ -444,7 +443,7 @@ const EmailDraftModal = ({ isOpen, onClose, order }) => {
     setDraftError("");
 
     try {
-      const prompt = `Rédige un e-mail professionnel et chaleureux en français destiné au client "${order.customer}". L'e-mail concerne leur commande n°${order.id} d'un montant de ${order.amount}. Le statut actuel de la commande est : "${order.status}". L'expéditeur est "Alex de Xavalux". L'e-mail doit comporter un objet approprié, être prêt à être envoyé, et ne contenir que l'e-mail (pas d'intro ou de conclusion de l'IA).`;
+      const prompt = `Rédige un e-mail professionnel et chaleureux en français destiné au client "${order.customer}". L'e-mail concerne leur commande n°${order.id} d'un montant de ${order.amount}. Le statut actuel de la commande est : "${order.status}". L'expéditeur est "Xavier de Xavalux". L'e-mail doit comporter un objet approprié, être prêt à être envoyé, et ne contenir que l'e-mail (pas d'intro ou de conclusion de l'IA).`;
       const result = await callGemini(prompt);
       setDraft(result);
     } catch (error) {
@@ -483,7 +482,7 @@ const EmailDraftModal = ({ isOpen, onClose, order }) => {
           ) : (
             <div className="space-y-4">
               <p className="text-sm text-gray-400 mb-2">Voici une proposition de message générée par Gemini :</p>
-              <textarea 
+              <textarea
                 className="w-full h-64 bg-[#11131a] border border-[#2d313f] text-gray-200 rounded-lg p-4 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 resize-none font-sans"
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
@@ -496,11 +495,11 @@ const EmailDraftModal = ({ isOpen, onClose, order }) => {
           <button onClick={onClose} className="px-4 py-2 text-gray-400 hover:text-white font-medium transition-colors">
             Fermer
           </button>
-          <button 
+          <button
             onClick={async () => {
               await copyTextToClipboard(draft);
               onClose();
-            }} 
+            }}
             disabled={isDrafting || !draft}
             className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center space-x-2"
           >
@@ -540,10 +539,10 @@ const Dashboard = () => {
     <div className="px-4 sm:px-6 lg:px-8 pb-8 animate-in fade-in duration-300">
       <div className="mb-8 flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back, Alex</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back, Xavier</h1>
           <p className="text-gray-400 text-sm">Here's what's happening with your inventory today.</p>
         </div>
-        <button 
+        <button
           onClick={generateSummary}
           disabled={isLoadingAi}
           className="bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 border border-purple-500/30 px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium transition-colors disabled:opacity-50"
@@ -605,13 +604,13 @@ const Dashboard = () => {
             {/* Fake Bar Chart */}
             {[40, 70, 45, 90, 65, 85, 110].map((height, i) => (
               <div key={i} className="flex-1 flex flex-col items-center group">
-                <div 
-                  className="w-full bg-blue-600/20 group-hover:bg-blue-500 transition-colors rounded-t-sm" 
+                <div
+                  className="w-full bg-blue-600/20 group-hover:bg-blue-500 transition-colors rounded-t-sm"
                   style={{ height: `${height}%` }}
                 >
                   <div className="w-full h-1 bg-blue-500"></div>
                 </div>
-                <span className="text-xs text-gray-500 mt-2">Day {i+1}</span>
+                <span className="text-xs text-gray-500 mt-2">Day {i + 1}</span>
               </div>
             ))}
           </div>
@@ -628,10 +627,9 @@ const Dashboard = () => {
               { text: 'New shipment received', time: '5 hours ago', type: 'add' },
             ].map((activity, i) => (
               <div key={i} className="flex items-start space-x-4">
-                <div className={`mt-1 w-2 h-2 rounded-full ${
-                  activity.type === 'add' ? 'bg-green-500' : 
+                <div className={`mt-1 w-2 h-2 rounded-full ${activity.type === 'add' ? 'bg-green-500' :
                   activity.type === 'ship' ? 'bg-blue-500' : 'bg-red-500'
-                }`}></div>
+                  }`}></div>
                 <div>
                   <p className="text-gray-300 text-sm">{activity.text}</p>
                   <p className="text-gray-500 text-xs mt-1">{activity.time}</p>
@@ -667,7 +665,7 @@ const Inventory = () => {
           <h1 className="text-3xl font-bold text-white mb-2">Stock Inventory Dashboard</h1>
           <p className="text-gray-400 text-sm">Overview / Inventory</p>
         </div>
-        <button 
+        <button
           onClick={() => setIsAddModalOpen(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium transition-colors"
         >
@@ -682,7 +680,7 @@ const Inventory = () => {
           <h3 className="text-gray-400 text-sm font-medium mb-3">Total Items in Stock</h3>
           <div className="text-4xl font-bold text-white">4,280</div>
         </div>
-        
+
         <div className="bg-[#1a1d27] rounded-xl p-6 border border-[#2d313f] border-l-4 border-l-red-500">
           <h3 className="text-gray-400 text-sm font-medium mb-3">Low Stock Alerts</h3>
           <div className="flex items-baseline space-x-2">
@@ -722,41 +720,41 @@ const Inventory = () => {
       <div className="bg-[#1a1d27] border border-[#2d313f] rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px] text-left border-collapse">
-          <thead>
-            <tr className="border-b border-[#2d313f] text-xs uppercase tracking-wider text-gray-400">
-              <th className="px-6 py-4 font-medium">Item / SKU</th>
-              <th className="px-6 py-4 font-medium">Alloy</th>
-              <th className="px-6 py-4 font-medium">Finish</th>
-              <th className="px-6 py-4 font-medium">Dimensions</th>
-              <th className="px-6 py-4 font-medium">Stock Level</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#2d313f]">
-            {inventoryData.map((item) => (
-              <tr key={item.id} className="hover:bg-[#1f232e] transition-colors group">
-                <td className="px-6 py-4">
-                  <div className="font-medium text-white">{item.name}</div>
-                  <div className="text-sm text-gray-500">{item.sku}</div>
-                </td>
-                <td className="px-6 py-4 text-gray-300">{item.alloy}</td>
-                <td className="px-6 py-4 text-gray-300">{item.finish}</td>
-                <td className="px-6 py-4 text-gray-300">{item.dimensions}</td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center space-x-2">
-                    <span className={`w-2 h-2 rounded-full ${item.status === 'good' ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                    <span className="text-gray-300">{item.stock}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex justify-end space-x-4">
-                    <button className="text-blue-500 hover:text-blue-400 font-medium">Edit</button>
-                    <button className="text-red-500 hover:text-red-400 font-medium">Delete</button>
-                  </div>
-                </td>
+            <thead>
+              <tr className="border-b border-[#2d313f] text-xs uppercase tracking-wider text-gray-400">
+                <th className="px-6 py-4 font-medium">Item / SKU</th>
+                <th className="px-6 py-4 font-medium">Alloy</th>
+                <th className="px-6 py-4 font-medium">Finish</th>
+                <th className="px-6 py-4 font-medium">Dimensions</th>
+                <th className="px-6 py-4 font-medium">Stock Level</th>
+                <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
+            </thead>
+            <tbody className="divide-y divide-[#2d313f]">
+              {inventoryData.map((item) => (
+                <tr key={item.id} className="hover:bg-[#1f232e] transition-colors group">
+                  <td className="px-6 py-4">
+                    <div className="font-medium text-white">{item.name}</div>
+                    <div className="text-sm text-gray-500">{item.sku}</div>
+                  </td>
+                  <td className="px-6 py-4 text-gray-300">{item.alloy}</td>
+                  <td className="px-6 py-4 text-gray-300">{item.finish}</td>
+                  <td className="px-6 py-4 text-gray-300">{item.dimensions}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center space-x-2">
+                      <span className={`w-2 h-2 rounded-full ${item.status === 'good' ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                      <span className="text-gray-300">{item.stock}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex justify-end space-x-4">
+                      <button className="text-blue-500 hover:text-blue-400 font-medium">Edit</button>
+                      <button className="text-red-500 hover:text-red-400 font-medium">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>
@@ -776,7 +774,7 @@ const Orders = () => {
   ];
 
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'Completed': return 'bg-green-500/10 text-green-500 border border-green-500/20';
       case 'Processing': return 'bg-blue-500/10 text-blue-500 border border-blue-500/20';
       case 'Pending': return 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20';
@@ -795,7 +793,7 @@ const Orders = () => {
           <h1 className="text-3xl font-bold text-white mb-2">Order Management</h1>
           <p className="text-gray-400 text-sm">Track and manage outgoing shipments.</p>
         </div>
-        <button 
+        <button
           onClick={() => setIsCreateModalOpen(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium transition-colors"
         >
@@ -806,11 +804,10 @@ const Orders = () => {
 
       <div className="flex space-x-6 border-b border-[#2d313f] mb-6">
         {['All Orders', 'Pending', 'Processing', 'Completed'].map((tab, i) => (
-          <button 
-            key={i} 
-            className={`pb-4 px-2 font-medium text-sm border-b-2 ${
-              i === 0 ? 'border-blue-500 text-blue-500' : 'border-transparent text-gray-400 hover:text-gray-200'
-            }`}
+          <button
+            key={i}
+            className={`pb-4 px-2 font-medium text-sm border-b-2 ${i === 0 ? 'border-blue-500 text-blue-500' : 'border-transparent text-gray-400 hover:text-gray-200'
+              }`}
           >
             {tab}
           </button>
@@ -820,43 +817,43 @@ const Orders = () => {
       <div className="bg-[#1a1d27] border border-[#2d313f] rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px] text-left border-collapse">
-          <thead>
-            <tr className="border-b border-[#2d313f] text-xs uppercase tracking-wider text-gray-400">
-              <th className="px-6 py-4 font-medium">Order ID</th>
-              <th className="px-6 py-4 font-medium">Date</th>
-              <th className="px-6 py-4 font-medium">Customer</th>
-              <th className="px-6 py-4 font-medium">Total Amount</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#2d313f]">
-            {orders.map((order, i) => (
-              <tr key={i} className="hover:bg-[#1f232e] transition-colors group">
-                <td className="px-6 py-4 font-medium text-white">{order.id}</td>
-                <td className="px-6 py-4 text-gray-300">{order.date}</td>
-                <td className="px-6 py-4 text-gray-300">{order.customer}</td>
-                <td className="px-6 py-4 text-gray-300 font-medium">{order.amount}</td>
-                <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
-                    {order.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex justify-end items-center space-x-4">
-                    <button 
-                      onClick={() => setAiDraftOrder(order)}
-                      className="text-purple-400 hover:text-purple-300 font-medium text-sm flex items-center space-x-1 transition-colors"
-                      title="Générer un e-mail avec l'IA"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                    </button>
-                    <button className="text-gray-400 hover:text-white font-medium text-sm">View Details</button>
-                  </div>
-                </td>
+            <thead>
+              <tr className="border-b border-[#2d313f] text-xs uppercase tracking-wider text-gray-400">
+                <th className="px-6 py-4 font-medium">Order ID</th>
+                <th className="px-6 py-4 font-medium">Date</th>
+                <th className="px-6 py-4 font-medium">Customer</th>
+                <th className="px-6 py-4 font-medium">Total Amount</th>
+                <th className="px-6 py-4 font-medium">Status</th>
+                <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
+            </thead>
+            <tbody className="divide-y divide-[#2d313f]">
+              {orders.map((order, i) => (
+                <tr key={i} className="hover:bg-[#1f232e] transition-colors group">
+                  <td className="px-6 py-4 font-medium text-white">{order.id}</td>
+                  <td className="px-6 py-4 text-gray-300">{order.date}</td>
+                  <td className="px-6 py-4 text-gray-300">{order.customer}</td>
+                  <td className="px-6 py-4 text-gray-300 font-medium">{order.amount}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex justify-end items-center space-x-4">
+                      <button
+                        onClick={() => setAiDraftOrder(order)}
+                        className="text-purple-400 hover:text-purple-300 font-medium text-sm flex items-center space-x-1 transition-colors"
+                        title="Générer un e-mail avec l'IA"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                      </button>
+                      <button className="text-gray-400 hover:text-white font-medium text-sm">View Details</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>
@@ -885,12 +882,11 @@ const Settings = () => {
         {/* Settings Navigation */}
         <div className="w-full md:w-64 space-y-1">
           {tabs.map((item) => (
-            <button 
-              key={item.id} 
+            <button
+              key={item.id}
               onClick={() => setActiveSettingsTab(item.id)}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                activeSettingsTab === item.id ? 'bg-[#1a1d27] text-white border border-[#2d313f]' : 'text-gray-400 hover:bg-[#1a1d27]/50 hover:text-gray-200'
-              }`}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeSettingsTab === item.id ? 'bg-[#1a1d27] text-white border border-[#2d313f]' : 'text-gray-400 hover:bg-[#1a1d27]/50 hover:text-gray-200'
+                }`}
             >
               <item.icon className="w-4 h-4" />
               <span>{item.label}</span>
@@ -902,7 +898,7 @@ const Settings = () => {
         {activeSettingsTab === 'profile' && (
           <div className="flex-1 bg-[#1a1d27] border border-[#2d313f] rounded-xl p-8 animate-in fade-in duration-200">
             <h2 className="text-xl font-bold text-white mb-6">Profile Information</h2>
-            
+
             <div className="flex items-center space-x-6 mb-8">
               <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-3xl font-bold text-white">
                 A
@@ -919,38 +915,38 @@ const Settings = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">First Name</label>
-                  <input 
-                    type="text" 
-                    defaultValue="Alex"
-                    className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                  <input
+                    type="text"
+                    defaultValue="Xavier"
+                    className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Last Name</label>
-                  <input 
-                    type="text" 
-                    defaultValue="Mercer"
-                    className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                  <input
+                    type="text"
+                    defaultValue="Aholou"
+                    className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
-                <input 
-                  type="email" 
-                  defaultValue="alex.mercer@xavalux.com"
-                  className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                <input
+                  type="email"
+                  defaultValue="Xavier.Aholou@xavalux.com"
+                  className="w-full bg-[#11131a] border border-[#2d313f] text-white rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Role</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   defaultValue="Warehouse Supervisor"
                   disabled
-                  className="w-full bg-[#11131a]/50 border border-[#2d313f]/50 text-gray-500 rounded-lg px-4 py-2.5 cursor-not-allowed" 
+                  className="w-full bg-[#11131a]/50 border border-[#2d313f]/50 text-gray-500 rounded-lg px-4 py-2.5 cursor-not-allowed"
                 />
               </div>
 
@@ -1068,10 +1064,10 @@ export default function App() {
   return (
     <div className="flex min-h-screen flex-col lg:flex-row bg-[#13151f] font-sans selection:bg-blue-500/30">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      
+
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header />
-        
+
         <main className="flex-1 overflow-y-auto">
           {activeTab === 'dashboard' && <Dashboard />}
           {activeTab === 'inventory' && <Inventory />}
