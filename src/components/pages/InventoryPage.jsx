@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import AddStockModal from '../modals/AddStockModal.jsx';
-import { useData } from '../../context/DataContext.jsx';
+import { useData } from '../../context/useData.js';
 
 export default function InventoryPage({ t }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

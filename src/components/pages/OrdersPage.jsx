@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import CreateOrderModal from '../modals/CreateOrderModal.jsx';
-import { useData } from '../../context/DataContext.jsx';
+import { useData } from '../../context/useData.js';
 
 export default function OrdersPage({ t }) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);

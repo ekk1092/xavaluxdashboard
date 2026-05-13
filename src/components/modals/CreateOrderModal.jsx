@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { useModalLifecycle } from '../../hooks/useModalLifecycle.js';
-import { useData } from '../../context/DataContext.jsx';
+import { useData } from '../../context/useData.js';
 
 export default function CreateOrderModal({ isOpen, onClose, t }) {
   useModalLifecycle(isOpen, onClose);

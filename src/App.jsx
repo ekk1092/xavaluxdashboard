@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Header from './components/layout/Header.jsx';
 import Sidebar from './components/layout/Sidebar.jsx';
 import DashboardPage from './components/pages/DashboardPage.jsx';
@@ -10,7 +10,6 @@ import { createTranslator } from './i18n/translations.js';
 import { loadSettings, SETTINGS_STORAGE_KEY } from './settings/persistence.js';
 
 export default function App() {
-  const location = useLocation();
   const [settings, setSettings] = useState(() => loadSettings());
 
   useEffect(() => {

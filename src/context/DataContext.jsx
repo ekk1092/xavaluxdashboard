@@ -1,6 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-
-const DataContext = createContext(null);
+import { useEffect, useState } from 'react';
+import { DataContext } from './dataContextValue.js';
 
 const DEFAULT_INVENTORY = [
   { id: 1, name: 'Angle Profile 30x30', sku: 'SKU033', alloy: '6063-T6', finish: 'Mill Finish', dimensions: '6m', stock: '112 ft', status: 'good' },
@@ -57,12 +56,4 @@ export function DataProvider({ children }) {
       {children}
     </DataContext.Provider>
   );
-}
-
-export function useData() {
-  const context = useContext(DataContext);
-  if (!context) {
-    throw new Error('useData must be used within a DataProvider');
-  }
-  return context;
 }

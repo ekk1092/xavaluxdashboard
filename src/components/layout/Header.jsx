@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import { useData } from '../../context/DataContext.jsx';
+import { useData } from '../../context/useData.js';
 
 export default function Header({ t, profile }) {
   const { searchQuery, setSearchQuery } = useData();

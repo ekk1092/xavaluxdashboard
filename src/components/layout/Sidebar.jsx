@@ -26,7 +26,7 @@ export default function Sidebar({ t }) {
             <NavLink
               key={item.id}
               to={item.path}
-              className={({ isActive }) =>
+              className={({ isActive: _isActive }) =>
                 `flex-shrink-0 lg:w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors`
               }
               style={({ isActive }) => (isActive

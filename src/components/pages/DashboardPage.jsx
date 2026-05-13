@@ -1,5 +1,5 @@
 import { Activity, Package, Truck, TrendingUp } from 'lucide-react';
-import { useData } from '../../context/DataContext.jsx';
+import { useData } from '../../context/useData.js';
 
 export default function DashboardPage({ t }) {
   const { inventory, orders } = useData();
