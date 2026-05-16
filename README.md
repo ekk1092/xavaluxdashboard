@@ -14,6 +14,16 @@ npm install
 npm run dev
 ```
 
+## Python Virtual Environment
+
+```bash
+# Create virtual environment if not exists
+python3 -m venv .venv
+
+# Activate the virtual environment
+source .venv/bin/activate
+```
+
 The app runs on `http://localhost:5173` by default.
 
 ## Environment Variables

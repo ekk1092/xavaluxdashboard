@@ -1,26 +1,37 @@
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import AddStockModal from '../modals/AddStockModal.jsx';
+import { useData } from '../../context/useData.js';
 
 export default function InventoryPage({ t }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const { inventory, deleteStock, searchQuery } = useData();
 
-  const inventoryData = [
-    { id: 1, name: 'Angle Profile 30x30', sku: 'SKU033', alloy: '6063-T6', finish: 'Mill Finish', dimensions: '6m', stock: '112 ft', status: 'good' },
-    { id: 2, name: 'Aluminium Extrusion 40x40', sku: 'SKU001', alloy: '6063-T6', finish: 'Clear Anodized', dimensions: '6m', stock: '1,250 ft', status: 'good' },
-    { id: 3, name: 'U-Channel Standard', sku: 'SKU089', alloy: '6061-T4', finish: 'Powder Coated', dimensions: '3m', stock: '12 ft', status: 'low' },
-  ];
+  const handleCloseModal = useCallback(() => setIsAddModalOpen(false), []);
+
+  const filteredInventory = inventory.filter(item => 
+    item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    item.sku.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalStock = inventory.reduce((sum, item) => {
+    const value = parseInt(item.stock.replace(/[^0-9]/g, '')) || 0;
+    return sum + value;
+  }, 0);
+
+  const lowStockCount = inventory.filter(item => item.status === 'low').length;
+  const uniqueSkusCount = new Set(inventory.map(item => item.sku)).size;
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 pb-8 animate-in fade-in duration-300">
-      <AddStockModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} t={t} />
+      <AddStockModal isOpen={isAddModalOpen} onClose={handleCloseModal} t={t} />
 
       <div className="flex justify-between items-end mb-8">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--app-text)' }}>{t('inventory_title')}</h1>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('inventory_subtitle')}</p>
         </div>
-        <button onClick={() => setIsAddModalOpen(true)} className="px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium" style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}>
+        <button onClick={() => setIsAddModalOpen(true)} className="px-4 py-2.5 rounded-lg flex items-center space-x-2 font-medium transition-colors" style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }}>
           <Plus className="w-5 h-5" />
           <span>{t('add_new_stock')}</span>
         </button>
@@ -29,25 +40,25 @@ export default function InventoryPage({ t }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="rounded-xl p-6" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)' }}>
           <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--muted)' }}>{t('total_items_stock')}</h3>
-          <div className="text-4xl font-bold" style={{ color: 'var(--app-text)' }}>4,280</div>
+          <div className="text-4xl font-bold" style={{ color: 'var(--app-text)' }}>{totalStock.toLocaleString()}</div>
         </div>
 
-        <div className="rounded-xl p-6" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)', borderLeft: '4px solid #ef4444' }}>
+        <div className="rounded-xl p-6" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)', borderLeft: '4px solid var(--danger)' }}>
           <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--muted)' }}>{t('low_stock_alerts')}</h3>
           <div className="flex items-baseline space-x-2">
-            <span className="text-4xl font-bold" style={{ color: 'var(--app-text)' }}>4</span>
-            <span style={{ color: 'var(--muted)' }}>items</span>
+            <span className="text-4xl font-bold" style={{ color: 'var(--app-text)' }}>{lowStockCount}</span>
+            <span style={{ color: 'var(--muted)' }}>{t('items') || 'items'}</span>
           </div>
         </div>
 
-        <div className="bg-[#1a1d27] rounded-xl p-6 border border-[#2d313f]">
-          <h3 className="text-gray-400 text-sm font-medium mb-3">{t('unique_skus')}</h3>
-          <div className="text-4xl font-bold text-white">9</div>
+        <div className="rounded-xl p-6" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)' }}>
+          <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--muted)' }}>{t('unique_skus')}</h3>
+          <div className="text-4xl font-bold" style={{ color: 'var(--app-text)' }}>{uniqueSkusCount}</div>
         </div>
       </div>
 
       <div className="flex space-x-4 mb-6">
-        <button className="px-4 py-2 rounded-lg" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)', color: 'var(--muted)' }}>{t('clear_filters')}</button>
+        <button className="px-4 py-2 rounded-lg transition-colors" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)', color: 'var(--muted)' }}>{t('clear_filters')}</button>
       </div>
 
       <div className="rounded-xl overflow-hidden" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)' }}>
@@ -63,30 +74,44 @@ export default function InventoryPage({ t }) {
                 <th className="px-6 py-4 font-medium text-right">{t('actions')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y" style={{ borderColor: 'var(--panel-border)' }}>
-              {inventoryData.map((item) => (
-                <tr key={item.id} className="hover:bg-[#1f232e] transition-colors group">
-                  <td className="px-6 py-4">
-                    <div className="font-medium text-white">{item.name}</div>
-                    <div className="text-sm text-gray-500">{item.sku}</div>
-                  </td>
-                  <td className="px-6 py-4 text-gray-300">{item.alloy}</td>
-                  <td className="px-6 py-4 text-gray-300">{item.finish}</td>
-                  <td className="px-6 py-4 text-gray-300">{item.dimensions}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center space-x-2">
-                      <span className={`w-2 h-2 rounded-full ${item.status === 'good' ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                      <span className="text-gray-300">{item.stock}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex justify-end space-x-4">
-                      <button className="font-medium" style={{ color: 'var(--accent)' }}>{t('edit')}</button>
-                      <button className="font-medium" style={{ color: '#ef4444' }}>{t('delete')}</button>
-                    </div>
+            <tbody>
+              {filteredInventory.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center" style={{ color: 'var(--muted)' }}>
+                    {t('no_items_found') || 'No items found in inventory.'}
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredInventory.map((item) => (
+                  <tr
+                    key={item.id}
+                    className="transition-colors"
+                    style={{ borderBottom: '1px solid var(--panel-border)' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--panel-hover)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
+                  >
+                    <td className="px-6 py-4">
+                      <div className="font-medium" style={{ color: 'var(--app-text)' }}>{item.name}</div>
+                      <div className="text-sm" style={{ color: 'var(--muted)' }}>{item.sku}</div>
+                    </td>
+                    <td className="px-6 py-4" style={{ color: 'var(--app-text)' }}>{item.alloy}</td>
+                    <td className="px-6 py-4" style={{ color: 'var(--app-text)' }}>{item.finish}</td>
+                    <td className="px-6 py-4" style={{ color: 'var(--app-text)' }}>{item.dimensions}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center space-x-2">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.status === 'good' ? 'var(--status-good)' : 'var(--status-low)' }}></span>
+                        <span style={{ color: 'var(--app-text)' }}>{item.stock}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex justify-end space-x-4">
+                        <button className="font-medium" style={{ color: 'var(--accent)' }}>{t('edit')}</button>
+                        <button onClick={() => deleteStock(item.id)} className="font-medium" style={{ color: 'var(--danger)' }}>{t('delete')}</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

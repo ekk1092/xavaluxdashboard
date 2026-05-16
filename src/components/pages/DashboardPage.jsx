@@ -1,6 +1,12 @@
 import { Activity, Package, Truck, TrendingUp } from 'lucide-react';
+import { useData } from '../../context/useData.js';
 
 export default function DashboardPage({ t }) {
+  const { inventory, orders } = useData();
+
+  const lowStockCount = inventory.filter((item) => item.status === 'low').length;
+  const inTransitCount = orders.filter((order) => order.status === 'processing' || order.status === 'pending').length;
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 pb-8 animate-in fade-in duration-300">
       <div className="mb-8 flex justify-between items-start">
@@ -12,17 +18,17 @@ export default function DashboardPage({ t }) {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         {[
-          { label: t('stat_total_value'), value: '$245K', icon: TrendingUp, color: 'text-green-500' },
-          { label: t('stat_total_products'), value: '1,240', icon: Package, color: 'text-blue-500' },
-          { label: t('stat_low_stock'), value: '12', icon: Activity, color: 'text-red-500' },
-          { label: t('stat_in_transit'), value: '8', icon: Truck, color: 'text-yellow-500' },
+          { label: t('stat_total_value'), value: '$245K', icon: TrendingUp, iconColor: 'var(--status-good)' },
+          { label: t('stat_total_products'), value: inventory.length.toLocaleString(), icon: Package, iconColor: 'var(--accent)' },
+          { label: t('stat_low_stock'), value: lowStockCount.toString(), icon: Activity, iconColor: 'var(--danger)' },
+          { label: t('stat_in_transit'), value: inTransitCount.toString(), icon: Truck, iconColor: 'var(--status-pending)' },
         ].map((stat) => (
           <div key={stat.label} className="rounded-xl p-6 flex items-center justify-between transition-colors" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)' }}>
             <div>
               <p className="text-sm font-medium mb-1" style={{ color: 'var(--muted)' }}>{stat.label}</p>
               <h3 className="text-2xl font-bold" style={{ color: 'var(--app-text)' }}>{stat.value}</h3>
             </div>
-            <div className={`p-3 rounded-lg`} style={{ backgroundColor: 'var(--panel-border)' }}>
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--icon-bg)', color: stat.iconColor }}>
               <stat.icon className="w-6 h-6" />
             </div>
           </div>
@@ -41,10 +47,12 @@ export default function DashboardPage({ t }) {
           <div className="h-64 flex items-end space-x-2 sm:space-x-4">
             {[40, 70, 45, 90, 65, 85, 110].map((height, index) => (
               <div key={index} className="flex-1 flex flex-col items-center group">
-                <div className="w-full bg-blue-600/20 group-hover:bg-blue-500 transition-colors rounded-t-sm" style={{ height: `${height}%` }}>
-                  <div className="w-full h-1 bg-blue-500"></div>
+                <div className="w-full rounded-t-sm transition-colors" style={{ height: `${height}%`, backgroundColor: 'var(--chart-bar)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--chart-bar-hover)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--chart-bar)')}>
+                  <div className="w-full h-1" style={{ backgroundColor: 'var(--chart-bar-top)' }}></div>
                 </div>
-                <span className="text-xs text-gray-500 mt-2">
+                <span className="text-xs mt-2" style={{ color: 'var(--muted)' }}>
                   {t('day')} {index + 1}
                 </span>
               </div>
@@ -62,15 +70,17 @@ export default function DashboardPage({ t }) {
               { text: 'New shipment received', time: '5 hours ago', type: 'add' },
             ].map((activity) => (
               <div key={`${activity.text}-${activity.time}`} className="flex items-start space-x-4">
-                <div className={`mt-1 w-2 h-2 rounded-full ${activity.type === 'add' ? 'bg-green-500' : activity.type === 'ship' ? 'bg-blue-500' : 'bg-red-500'}`}></div>
+                <div className="mt-1 w-2 h-2 rounded-full" style={{ backgroundColor: activity.type === 'add' ? 'var(--status-good)' : activity.type === 'ship' ? 'var(--accent)' : 'var(--danger)' }}></div>
                 <div>
-                  <p className="text-sm" style={{ color: 'var(--muted)' }}>{activity.text}</p>
+                  <p className="text-sm" style={{ color: 'var(--app-text)' }}>{activity.text}</p>
                   <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>{activity.time}</p>
                 </div>
               </div>
             ))}
           </div>
-          <button className="w-full mt-6 py-2 rounded-lg text-sm font-medium" style={{ border: '1px solid var(--panel-border)', color: 'var(--muted)' }}>{t('view_all_activity')}</button>
+          <button className="w-full mt-6 py-2 rounded-lg text-sm font-medium transition-colors" style={{ border: '1px solid var(--panel-border)', color: 'var(--muted)' }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--panel-hover)')}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}>{t('view_all_activity')}</button>
         </div>
       </div>
     </div>
