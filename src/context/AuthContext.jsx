@@ -50,7 +50,12 @@ export function AuthProvider({ children }) {
     if (matchedByEmail.password !== password) {
       return { success: false, error: 'wrong_password' };
     }
-    const { password: _pw, ...userData } = matchedByEmail;
+    const userData = {
+      email: matchedByEmail.email,
+      firstName: matchedByEmail.firstName,
+      lastName: matchedByEmail.lastName,
+      role: matchedByEmail.role,
+    };
     setUser(userData);
     return { success: true };
   }, []);
