@@ -19,7 +19,7 @@ export const DEFAULT_SETTINGS = {
   system: {
     language: 'fr',
     timezone: 'Africa/Abidjan',
-    theme: 'light',
+    theme: 'system',
   },
 };
 
