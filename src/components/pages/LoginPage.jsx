@@ -26,7 +26,10 @@ export default function LoginPage({ t }) {
 
     const result = login(email, password);
     if (!result.success) {
-      setError(t('login_error_invalid'));
+      const errorKey = result.error === 'email_not_found'
+        ? 'login_error_email'
+        : 'login_error_password';
+      setError(t(errorKey));
       setIsLoading(false);
     }
   };
