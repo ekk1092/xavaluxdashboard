@@ -47,7 +47,7 @@ export default function InventoryPage({ t }) {
           <h3 className="text-sm font-medium mb-3" style={{ color: 'var(--muted)' }}>{t('low_stock_alerts')}</h3>
           <div className="flex items-baseline space-x-2">
             <span className="text-4xl font-bold" style={{ color: 'var(--app-text)' }}>{lowStockCount}</span>
-            <span style={{ color: 'var(--muted)' }}>{t('items') || 'items'}</span>
+            <span style={{ color: 'var(--muted)' }}>{lowStockCount <= 1 ? t('item_singular') : t('items')}</span>
           </div>
         </div>
 
