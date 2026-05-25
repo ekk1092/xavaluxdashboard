@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { Eye, EyeOff, Layers, Loader2 } from 'lucide-react';
 import { useAuth } from '../../context/useAuth.js';
 
+const BRAND_NAME = 'XAVALUX';
+const DEMO_EMAIL = 'xav.aholou@xavalux.com';
+const DEMO_PASSWORD = 'admin123';
+
 export default function LoginPage({ t }) {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
@@ -49,7 +53,7 @@ export default function LoginPage({ t }) {
           <div className="login-logo">
             <Layers className="login-logo-icon" />
           </div>
-          <h1 className="login-title">XAVALUX</h1>
+          <h1 className="login-title">{BRAND_NAME}</h1>
           <p className="login-subtitle">{t('login_subtitle')}</p>
         </div>
 
@@ -139,17 +143,17 @@ export default function LoginPage({ t }) {
           <div className="login-demo-credentials">
             <div className="login-demo-row">
               <span className="login-demo-label">{t('email_address')}:</span>
-              <code className="login-demo-value">xav.aholou@xavalux.com</code>
+              <code className="login-demo-value">{DEMO_EMAIL}</code>
             </div>
             <div className="login-demo-row">
               <span className="login-demo-label">{t('login_password_label')}:</span>
-              <code className="login-demo-value">admin123</code>
+              <code className="login-demo-value">{DEMO_PASSWORD}</code>
             </div>
           </div>
         </div>
 
         <p className="login-footer">
-          © {new Date().getFullYear()} Xavalux — {t('login_footer')}
+          © {new Date().getFullYear()} {BRAND_NAME.charAt(0) + BRAND_NAME.slice(1).toLowerCase()} — {t('login_footer')}
         </p>
       </div>
     </div>

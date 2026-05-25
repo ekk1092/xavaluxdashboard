@@ -2,6 +2,8 @@ import { Box, ClipboardList, Layers, LayoutDashboard, LogOut, Settings as Settin
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth.js';
 
+const BRAND_NAME = 'XAVALUX';
+
 export default function Sidebar({ t }) {
   const { user, logout } = useAuth();
 
@@ -19,7 +21,7 @@ export default function Sidebar({ t }) {
     >
       <div className="p-6 flex items-center space-x-3" style={{ color: 'var(--app-text)' }}>
         <Layers className="w-8 h-8" style={{ color: 'var(--accent)' }} />
-        <span className="text-xl font-bold tracking-wider">XAVALUX</span>
+        <span className="text-xl font-bold tracking-wider">{BRAND_NAME}</span>
       </div>
 
       <nav className="flex flex-row lg:flex-col flex-1 px-4 py-4 gap-2 overflow-x-auto lg:overflow-visible">
