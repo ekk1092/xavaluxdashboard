@@ -376,12 +376,12 @@ export const createTranslator = (language) => {
   else languageBundle = TRANSLATIONS.en;
 
   return (key) => {
-    if (typeof key === 'string') {
+    if (typeof key === 'string' && key !== '__proto__' && key !== 'constructor') {
       if (Object.prototype.hasOwnProperty.call(languageBundle, key)) {
-        return languageBundle[key];
+        return Reflect.get(languageBundle, key);
       }
       if (Object.prototype.hasOwnProperty.call(TRANSLATIONS.en, key)) {
-        return TRANSLATIONS.en[key];
+        return Reflect.get(TRANSLATIONS.en, key);
       }
     }
     return key;
