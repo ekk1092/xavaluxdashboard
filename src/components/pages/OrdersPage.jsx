@@ -30,14 +30,17 @@ export default function OrdersPage({ t }) {
   const filteredOrders = activeOrderTab === 'all' ? searchedOrders : searchedOrders.filter((o) => o.status === activeOrderTab);
 
   const getStatusStyle = (status) => {
-    const map = {
-      completed: { color: 'var(--status-good)', bg: 'rgba(34, 197, 94, 0.1)', border: 'rgba(34, 197, 94, 0.3)' },
-      processing: { color: 'var(--status-processing)', bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.3)' },
-      pending: { color: 'var(--status-pending)', bg: 'rgba(234, 179, 8, 0.1)', border: 'rgba(234, 179, 8, 0.3)' },
-      cancelled: { color: 'var(--status-cancelled)', bg: 'rgba(239, 68, 68, 0.1)', border: 'rgba(239, 68, 68, 0.3)' },
-    };
-    const s = map[status] || map.pending;
-    return { color: s.color, backgroundColor: s.bg, border: `1px solid ${s.border}` };
+    switch (status) {
+      case 'completed':
+        return { color: 'var(--status-good)', backgroundColor: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)' };
+      case 'processing':
+        return { color: 'var(--status-processing)', backgroundColor: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)' };
+      case 'cancelled':
+        return { color: 'var(--status-cancelled)', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' };
+      case 'pending':
+      default:
+        return { color: 'var(--status-pending)', backgroundColor: 'rgba(234, 179, 8, 0.1)', border: '1px solid rgba(234, 179, 8, 0.3)' };
+    }
   };
 
   return (
