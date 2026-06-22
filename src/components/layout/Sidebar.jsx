@@ -1,6 +1,8 @@
 import { Box, ClipboardList, Layers, LayoutDashboard, LogOut, Settings as SettingsIcon } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth.js';
+
+const BRAND_NAME = 'XAVALUX';
 
 export default function Sidebar({ t }) {
   const { user, logout } = useAuth();
@@ -17,10 +19,10 @@ export default function Sidebar({ t }) {
       className="w-full lg:w-64 lg:h-screen flex flex-col"
       style={{ backgroundColor: 'var(--panel-bg)', borderRight: '1px solid var(--panel-border)', color: 'var(--muted)' }}
     >
-      <div className="p-6 flex items-center space-x-3" style={{ color: 'var(--app-text)' }}>
+      <Link to="/" className="p-6 flex items-center space-x-3 transition-opacity hover:opacity-90" style={{ color: 'var(--app-text)', textDecoration: 'none' }}>
         <Layers className="w-8 h-8" style={{ color: 'var(--accent)' }} />
-        <span className="text-xl font-bold tracking-wider">XAVALUX</span>
-      </div>
+        <span className="text-xl font-bold tracking-wider">{BRAND_NAME}</span>
+      </Link>
 
       <nav className="flex flex-row lg:flex-col flex-1 px-4 py-4 gap-2 overflow-x-auto lg:overflow-visible">
         {navItems.map((item) => {

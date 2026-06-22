@@ -1,4 +1,6 @@
 import React from 'react';
+import { loadSettings } from './settings/persistence.js';
+import { createTranslator } from './i18n/translations.js';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -17,6 +19,8 @@ export default class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
+      const settings = loadSettings();
+      const t = createTranslator(settings.system.language);
       return (
         <main
           style={{
@@ -39,9 +43,9 @@ export default class ErrorBoundary extends React.Component {
               background: 'var(--panel-bg)',
             }}
           >
-            <h1 style={{ color: 'var(--app-text)', margin: '0 0 8px' }}>Something went wrong</h1>
+            <h1 style={{ color: 'var(--app-text)', margin: '0 0 8px' }}>{t('error_title') || 'Something went wrong'}</h1>
             <p style={{ margin: 0 }}>
-              The dashboard encountered an unexpected error. Please refresh the page.
+              {t('error_description') || 'The dashboard encountered an unexpected error. Please refresh the page.'}
             </p>
           </section>
         </main>

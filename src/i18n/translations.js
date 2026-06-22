@@ -25,6 +25,7 @@ export const TRANSLATIONS = {
     unique_skus: 'Unique SKUs',
     clear_filters: 'Clear Filters',
     item_sku: 'Item / SKU',
+    sku: 'SKU',
     alloy: 'Alloy',
     finish: 'Finish',
     dimensions: 'Dimensions',
@@ -117,6 +118,8 @@ export const TRANSLATIONS = {
     login_demo_hint: 'Demo credentials',
     login_footer: 'All rights reserved.',
     logout: 'Log out',
+    error_title: 'Something went wrong',
+    error_description: 'The dashboard encountered an unexpected error. Please refresh the page.',
   },
   fr: {
     nav_dashboard: 'Tableau de bord',
@@ -144,6 +147,7 @@ export const TRANSLATIONS = {
     unique_skus: 'SKU uniques',
     clear_filters: 'Effacer les filtres',
     item_sku: 'Article / SKU',
+    sku: 'SKU',
     alloy: 'Alliage',
     finish: 'Finition',
     dimensions: 'Dimensions',
@@ -236,6 +240,8 @@ export const TRANSLATIONS = {
     login_demo_hint: 'Identifiants de démonstration',
     login_footer: 'Tous droits réservés.',
     logout: 'Déconnexion',
+    error_title: "Quelque chose s'est mal passé",
+    error_description: 'Le tableau de bord a rencontré une erreur inattendue. Veuillez rafraîchir la page.',
   },
   es: {
     nav_dashboard: 'Panel',
@@ -263,6 +269,7 @@ export const TRANSLATIONS = {
     unique_skus: 'SKUs únicos',
     clear_filters: 'Limpiar filtros',
     item_sku: 'Artículo / SKU',
+    sku: 'SKU',
     alloy: 'Aleación',
     finish: 'Acabado',
     dimensions: 'Dimensiones',
@@ -355,10 +362,28 @@ export const TRANSLATIONS = {
     login_demo_hint: 'Credenciales de demostración',
     login_footer: 'Todos los derechos reservados.',
     logout: 'Cerrar sesión',
+    error_title: 'Algo salió mal',
+    error_description: 'El panel de control encontró un error inesperado. Por favor actualice la página.',
   },
 };
 
 export const createTranslator = (language) => {
-  const languageBundle = TRANSLATIONS[language] || TRANSLATIONS.en;
-  return (key) => languageBundle[key] || TRANSLATIONS.en[key] || key;
+  const allowedLanguages = ['en', 'fr', 'es'];
+  const lang = allowedLanguages.includes(language) ? language : 'en';
+  let languageBundle;
+  if (lang === 'fr') languageBundle = TRANSLATIONS.fr;
+  else if (lang === 'es') languageBundle = TRANSLATIONS.es;
+  else languageBundle = TRANSLATIONS.en;
+
+  return (key) => {
+    if (typeof key === 'string' && key !== '__proto__' && key !== 'constructor') {
+      if (Object.prototype.hasOwnProperty.call(languageBundle, key)) {
+        return Reflect.get(languageBundle, key);
+      }
+      if (Object.prototype.hasOwnProperty.call(TRANSLATIONS.en, key)) {
+        return Reflect.get(TRANSLATIONS.en, key);
+      }
+    }
+    return key;
+  };
 };

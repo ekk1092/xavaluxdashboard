@@ -8,6 +8,38 @@ export default function NotificationsTab({ t, notificationsDraft, setNotificatio
     { key: 'emailEnabled', label: t('notification_email') },
   ];
 
+  const getChecked = (key) => {
+    switch (key) {
+      case 'lowStock':
+        return !!notificationsDraft.lowStock;
+      case 'orderUpdates':
+        return !!notificationsDraft.orderUpdates;
+      case 'weeklyReport':
+        return !!notificationsDraft.weeklyReport;
+      case 'emailEnabled':
+        return !!notificationsDraft.emailEnabled;
+      default:
+        return false;
+    }
+  };
+
+  const handleToggle = (key) => {
+    setNotificationsDraft((prev) => {
+      switch (key) {
+        case 'lowStock':
+          return { ...prev, lowStock: !prev.lowStock };
+        case 'orderUpdates':
+          return { ...prev, orderUpdates: !prev.orderUpdates };
+        case 'weeklyReport':
+          return { ...prev, weeklyReport: !prev.weeklyReport };
+        case 'emailEnabled':
+          return { ...prev, emailEnabled: !prev.emailEnabled };
+        default:
+          return prev;
+      }
+    });
+  };
+
   return (
     <div className="flex-1 rounded-xl p-8 animate-in fade-in duration-200 space-y-6" style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)' }}>
       <h2 className="text-xl font-bold" style={{ color: 'var(--app-text)' }}>{t('notifications_title')}</h2>
@@ -15,7 +47,7 @@ export default function NotificationsTab({ t, notificationsDraft, setNotificatio
       {notificationItems.map((item) => (
         <div key={item.key} className="flex items-center justify-between rounded-lg px-4 py-3" style={{ border: '1px solid var(--panel-border)', backgroundColor: 'var(--panel-bg)' }}>
           <p className="text-sm" style={{ color: 'var(--app-text)' }}>{item.label}</p>
-          <Toggle checked={notificationsDraft[item.key]} onChange={() => setNotificationsDraft((prev) => ({ ...prev, [item.key]: !prev[item.key] }))} />
+          <Toggle checked={getChecked(item.key)} onChange={() => handleToggle(item.key)} />
         </div>
       ))}
 

@@ -1,14 +1,27 @@
 import { Plus } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import CreateOrderModal from '../modals/CreateOrderModal.jsx';
+import OrderDetailsModal from '../modals/OrderDetailsModal.jsx';
 import { useData } from '../../context/useData.js';
 
 export default function OrdersPage({ t }) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [activeOrderTab, setActiveOrderTab] = useState('all');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { orders, searchQuery } = useData();
 
   const handleCloseModal = useCallback(() => setIsCreateModalOpen(false), []);
+
+  const handleOpenDetails = useCallback((order) => {
+    setSelectedOrder(order);
+    setIsDetailsOpen(true);
+  }, []);
+
+  const handleCloseDetails = useCallback(() => {
+    setSelectedOrder(null);
+    setIsDetailsOpen(false);
+  }, []);
 
   const mappedOrders = orders.map(o => ({
     ...o,
@@ -30,19 +43,23 @@ export default function OrdersPage({ t }) {
   const filteredOrders = activeOrderTab === 'all' ? searchedOrders : searchedOrders.filter((o) => o.status === activeOrderTab);
 
   const getStatusStyle = (status) => {
-    const map = {
-      completed: { color: 'var(--status-good)', bg: 'rgba(34, 197, 94, 0.1)', border: 'rgba(34, 197, 94, 0.3)' },
-      processing: { color: 'var(--status-processing)', bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.3)' },
-      pending: { color: 'var(--status-pending)', bg: 'rgba(234, 179, 8, 0.1)', border: 'rgba(234, 179, 8, 0.3)' },
-      cancelled: { color: 'var(--status-cancelled)', bg: 'rgba(239, 68, 68, 0.1)', border: 'rgba(239, 68, 68, 0.3)' },
-    };
-    const s = map[status] || map.pending;
-    return { color: s.color, backgroundColor: s.bg, border: `1px solid ${s.border}` };
+    switch (status) {
+      case 'completed':
+        return { color: 'var(--status-good)', backgroundColor: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)' };
+      case 'processing':
+        return { color: 'var(--status-processing)', backgroundColor: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)' };
+      case 'cancelled':
+        return { color: 'var(--status-cancelled)', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' };
+      case 'pending':
+      default:
+        return { color: 'var(--status-pending)', backgroundColor: 'rgba(234, 179, 8, 0.1)', border: '1px solid rgba(234, 179, 8, 0.3)' };
+    }
   };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 pb-8 animate-in fade-in duration-300">
       <CreateOrderModal isOpen={isCreateModalOpen} onClose={handleCloseModal} t={t} />
+      <OrderDetailsModal isOpen={isDetailsOpen} onClose={handleCloseDetails} order={selectedOrder} t={t} getStatusStyle={getStatusStyle} />
 
       <div className="flex justify-between items-end mb-8">
         <div>
@@ -105,7 +122,7 @@ export default function OrdersPage({ t }) {
                       <span className="px-3 py-1 rounded-full text-xs font-medium" style={getStatusStyle(order.status)}>{order.statusLabel}</span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="font-medium text-sm" style={{ color: 'var(--accent)' }}>{t('view_details')}</button>
+                      <button onClick={() => handleOpenDetails(order)} className="font-medium text-sm transition-colors" style={{ color: 'var(--accent)' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-hover)'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--accent)'}>{t('view_details')}</button>
                     </td>
                   </tr>
                 ))

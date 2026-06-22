@@ -86,7 +86,7 @@ export default function AddStockModal({ isOpen, onClose, t }) {
         <div className="p-6 overflow-y-auto space-y-5">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label htmlFor="sku-select" className="block text-sm font-medium mb-2" style={{ color: 'var(--muted)' }}>SKU</label>
+              <label htmlFor="sku-select" className="block text-sm font-medium mb-2" style={{ color: 'var(--muted)' }}>{t('sku') || 'SKU'}</label>
               <div className="relative">
                 <select id="sku-select" value={selectedSku} onChange={handleSkuChange} className="w-full appearance-none rounded-lg pl-4 pr-10 py-2.5 focus:outline-none" style={{ backgroundColor: 'var(--panel-bg)', color: 'var(--app-text)', border: '1px solid var(--panel-border)' }}>
                   <option value="">{t('select_reference') || 'Select reference...'}</option>

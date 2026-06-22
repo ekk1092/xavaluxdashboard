@@ -1,3 +1,15 @@
+const LANGUAGES = [
+  { code: 'en', name: 'English' },
+  { code: 'fr', name: 'Français' },
+  { code: 'es', name: 'Español' },
+];
+
+const TIMEZONES = [
+  { value: 'Africa/Abidjan', label: 'GMT (Abidjan)' },
+  { value: 'Europe/Paris', label: 'UTC+1 (Paris)' },
+  { value: 'America/New_York', label: 'UTC-5 (New York)' },
+];
+
 export default function SystemTab({ t, systemDraft, setSystemDraft, settings, onSettingsChange }) {
   const themeOptions = [
     { key: 'dark', label: t('dark') },
@@ -58,9 +70,9 @@ export default function SystemTab({ t, systemDraft, setSystemDraft, settings, on
             className="w-full appearance-none rounded-lg px-4 py-2.5 focus:outline-none"
             style={{ backgroundColor: 'var(--panel-bg)', color: 'var(--app-text)', border: '1px solid var(--panel-border)' }}
           >
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="es">Español</option>
+            {LANGUAGES.map((lang) => (
+              <option key={lang.code} value={lang.code}>{lang.name}</option>
+            ))}
           </select>
         </div>
 
@@ -73,9 +85,9 @@ export default function SystemTab({ t, systemDraft, setSystemDraft, settings, on
             className="w-full appearance-none rounded-lg px-4 py-2.5 focus:outline-none"
             style={{ backgroundColor: 'var(--panel-bg)', color: 'var(--app-text)', border: '1px solid var(--panel-border)' }}
           >
-            <option value="Africa/Abidjan">GMT (Abidjan)</option>
-            <option value="Europe/Paris">UTC+1 (Paris)</option>
-            <option value="America/New_York">UTC-5 (New York)</option>
+            {TIMEZONES.map((tz) => (
+              <option key={tz.value} value={tz.value}>{tz.label}</option>
+            ))}
           </select>
         </div>
       </div>
