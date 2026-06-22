@@ -17,9 +17,9 @@ export const DEFAULT_SETTINGS = {
     lastPasswordUpdate: null,
   },
   system: {
-    language: 'en',
+    language: 'fr',
     timezone: 'Africa/Abidjan',
-    theme: 'light',
+    theme: 'system',
   },
 };
 

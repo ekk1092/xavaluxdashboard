@@ -6,8 +6,9 @@ import { DataProvider } from './context/DataContext.jsx';
 
 describe('App', () => {
   it('renders login page when not authenticated', () => {
-    // Clear any stored auth so the user is logged out
+    // Clear any stored auth/settings so defaults apply
     localStorage.removeItem('xavalux.auth.v1');
+    localStorage.removeItem('xavalux.settings.v1');
     render(
       <MemoryRouter>
         <AuthProvider>
@@ -18,6 +19,6 @@ describe('App', () => {
       </MemoryRouter>
     );
     expect(screen.getByText('XAVALUX')).toBeInTheDocument();
-    expect(screen.getByText('Sign in to your account')).toBeInTheDocument();
+    expect(screen.getByText('Connectez-vous à votre compte')).toBeInTheDocument();
   });
 });

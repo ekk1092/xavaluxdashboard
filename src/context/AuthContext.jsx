@@ -41,13 +41,21 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   const login = useCallback((email, password) => {
-    const found = DEMO_USERS.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password,
+    const matchedByEmail = DEMO_USERS.find(
+      (u) => u.email.toLowerCase() === email.toLowerCase(),
     );
-    if (!found) {
-      return { success: false, error: 'invalid_credentials' };
+    if (!matchedByEmail) {
+      return { success: false, error: 'email_not_found' };
     }
-    const { password: _pw, ...userData } = found;
+    if (matchedByEmail.password !== password) {
+      return { success: false, error: 'wrong_password' };
+    }
+    const userData = {
+      email: matchedByEmail.email,
+      firstName: matchedByEmail.firstName,
+      lastName: matchedByEmail.lastName,
+      role: matchedByEmail.role,
+    };
     setUser(userData);
     return { success: true };
   }, []);
