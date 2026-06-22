@@ -47,15 +47,21 @@ export default function OrderDetailsModal({ isOpen, onClose, order, t, getStatus
           <div style={{ borderTop: '1px solid var(--panel-border)', paddingTop: '1.5rem' }}>
             <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--app-text)' }}>{t('items') || 'Items'}</h3>
             <div className="space-y-3">
-              {mockItems.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center p-3 rounded-lg" style={{ border: '1px solid var(--panel-border)', backgroundColor: 'var(--panel-hover)' }}>
-                  <div>
-                    <p className="text-sm font-medium" style={{ color: 'var(--app-text)' }}>{item.name}</p>
-                    <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('quantity') || 'Quantity'}: {item.quantity}</p>
+              {mockItems.length === 0 ? (
+                <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                  No items available for this order.
+                </p>
+              ) : (
+                mockItems.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center p-3 rounded-lg" style={{ border: '1px solid var(--panel-border)', backgroundColor: 'var(--panel-hover)' }}>
+                    <div>
+                      <p className="text-sm font-medium" style={{ color: 'var(--app-text)' }}>{item.name}</p>
+                      <p className="text-xs" style={{ color: 'var(--muted)' }}>{t('quantity') || 'Quantity'}: {item.quantity}</p>
+                    </div>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--app-text)' }}>{item.price}</p>
                   </div>
-                  <p className="text-sm font-semibold" style={{ color: 'var(--app-text)' }}>{item.price}</p>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
