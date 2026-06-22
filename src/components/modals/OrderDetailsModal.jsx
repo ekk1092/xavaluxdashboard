@@ -13,7 +13,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order, t, getStatus
       <div role="dialog" aria-modal="true" aria-labelledby="modal-title" className="w-full max-w-lg shadow-2xl flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200" onMouseDown={(event) => event.stopPropagation()} style={{ backgroundColor: 'var(--panel-bg)', border: '1px solid var(--panel-border)', borderRadius: '1rem' }}>
         <div className="flex justify-between items-center p-6" style={{ borderBottom: '1px solid var(--panel-border)' }}>
           <h2 id="modal-title" className="text-xl font-bold" style={{ color: 'var(--app-text)' }}>
-            {t('order_details') || 'Order Details'} - {order.id}
+            {(t('order_details') === 'order_details' ? 'Order Details' : t('order_details'))} - {order.id}
           </h2>
           <button onClick={onClose} aria-label={t('close')} className="transition-colors" style={{ color: 'var(--muted)' }}>
             <X className="w-5 h-5" />
