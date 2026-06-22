@@ -6,11 +6,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order, t, getStatus
 
   if (!isOpen || !order) return null;
 
-  // Statically mock some items for the selected order to make the layout extremely rich and premium.
-  const mockItems = [
-    { name: 'Aluminium Profile 40x40 Clear Anodized', quantity: '150 ft', price: '$8.50' },
-    { name: 'Angle Profile 30x30 Mill Finish', quantity: '80 ft', price: '$4.20' },
-  ];
+  const mockItems = Array.isArray(order.items) ? order.items : [];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200" onMouseDown={onClose}>
