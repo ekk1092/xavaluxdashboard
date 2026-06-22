@@ -6,6 +6,8 @@ import DashboardPage from './components/pages/DashboardPage.jsx';
 import InventoryPage from './components/pages/InventoryPage.jsx';
 import LoginPage from './components/pages/LoginPage.jsx';
 import OrdersPage from './components/pages/OrdersPage.jsx';
+import VentesPage from './components/pages/VentesPage.jsx';
+import DepensesPage from './components/pages/DepensesPage.jsx';
 import SettingsPage from './components/settings/SettingsPage.jsx';
 import { useAuth } from './context/useAuth.js';
 import { createTranslator } from './i18n/translations.js';
@@ -55,6 +57,8 @@ export default function App() {
             <Route path="/" element={<DashboardPage t={t} />} />
             <Route path="/inventory" element={<InventoryPage t={t} />} />
             <Route path="/orders" element={<OrdersPage t={t} />} />
+            <Route path="/sales" element={<VentesPage t={t} />} />
+            <Route path="/expenses" element={<DepensesPage t={t} />} />
             <Route path="/settings" element={<SettingsPage t={t} settings={settings} onSettingsChange={setSettings} />} />
           </Routes>
         </main>

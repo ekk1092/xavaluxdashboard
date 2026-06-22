@@ -1,4 +1,4 @@
-import { Box, ClipboardList, Layers, LayoutDashboard, LogOut, Settings as SettingsIcon } from 'lucide-react';
+import { Box, ClipboardList, Layers, LayoutDashboard, LogOut, Settings as SettingsIcon, TrendingUp, Receipt } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth.js';
 
@@ -11,6 +11,8 @@ export default function Sidebar({ t }) {
     { id: 'dashboard', path: '/', label: t('nav_dashboard'), icon: LayoutDashboard },
     { id: 'inventory', path: '/inventory', label: t('nav_inventory'), icon: Box },
     { id: 'orders', path: '/orders', label: t('nav_orders'), icon: ClipboardList },
+    { id: 'sales', path: '/sales', label: t('nav_sales'), icon: TrendingUp },
+    { id: 'expenses', path: '/expenses', label: t('nav_expenses'), icon: Receipt },
     { id: 'settings', path: '/settings', label: t('nav_settings'), icon: SettingsIcon },
   ];
 

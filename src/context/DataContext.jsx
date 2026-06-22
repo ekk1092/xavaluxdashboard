@@ -14,6 +14,18 @@ const DEFAULT_ORDERS = [
   { id: 'ORD-2023-092', date: 'Oct 26, 2023', customer: 'Metro Developers', amount: '$650.00', status: 'cancelled' },
 ];
 
+const DEFAULT_SALES = [
+  { id: 'SAL-001', date: 'Oct 23, 2023', item: 'Angle Profile 30x30', quantity: 120, amount: '$1,440.00', customer: 'AluCorp France', paymentMethod: 'Bank Transfer' },
+  { id: 'SAL-002', date: 'Oct 24, 2023', item: 'Aluminium Extrusion 40x40', quantity: 450, amount: '$3,600.00', customer: 'VitreDesign Paris', paymentMethod: 'Credit Card' },
+  { id: 'SAL-003', date: 'Oct 25, 2023', item: 'U-Channel Standard', quantity: 80, amount: '$720.00', customer: 'LogiStructure S.A.', paymentMethod: 'Bank Transfer' },
+];
+
+const DEFAULT_EXPENSES = [
+  { id: 'EXP-001', date: 'Oct 22, 2023', category: 'Raw Materials', description: 'Aluminium billet extrusion purchase', amount: '$4,800.00', status: 'paid' },
+  { id: 'EXP-002', date: 'Oct 24, 2023', category: 'Logistics', description: 'Container freight shipment', amount: '$1,200.00', status: 'paid' },
+  { id: 'EXP-003', date: 'Oct 25, 2023', category: 'Energy', description: 'Factory electricity bill', amount: '$850.00', status: 'unpaid' },
+];
+
 export function DataProvider({ children }) {
   const [inventory, setInventory] = useState(() => {
     const saved = localStorage.getItem('xavalux_inventory');
@@ -25,6 +37,16 @@ export function DataProvider({ children }) {
     return saved ? JSON.parse(saved) : DEFAULT_ORDERS;
   });
 
+  const [sales, setSales] = useState(() => {
+    const saved = localStorage.getItem('xavalux_sales');
+    return saved ? JSON.parse(saved) : DEFAULT_SALES;
+  });
+
+  const [expenses, setExpenses] = useState(() => {
+    const saved = localStorage.getItem('xavalux_expenses');
+    return saved ? JSON.parse(saved) : DEFAULT_EXPENSES;
+  });
+
   useEffect(() => {
     localStorage.setItem('xavalux_inventory', JSON.stringify(inventory));
   }, [inventory]);
@@ -32,6 +54,14 @@ export function DataProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('xavalux_orders', JSON.stringify(orders));
   }, [orders]);
+
+  useEffect(() => {
+    localStorage.setItem('xavalux_sales', JSON.stringify(sales));
+  }, [sales]);
+
+  useEffect(() => {
+    localStorage.setItem('xavalux_expenses', JSON.stringify(expenses));
+  }, [expenses]);
 
   const addStock = (item) => {
     setInventory((prev) => [...prev, { ...item, id: Date.now() }]);
@@ -49,10 +79,32 @@ export function DataProvider({ children }) {
     setOrders((prev) => [{ ...order, id: `ORD-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}` }, ...prev]);
   };
 
+  const addSale = (sale) => {
+    setSales((prev) => [{ ...sale, id: `SAL-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}` }, ...prev]);
+  };
+
+  const deleteSale = (id) => {
+    setSales((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  const addExpense = (expense) => {
+    setExpenses((prev) => [{ ...expense, id: `EXP-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}` }, ...prev]);
+  };
+
+  const deleteExpense = (id) => {
+    setExpenses((prev) => prev.filter((e) => e.id !== id));
+  };
+
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <DataContext.Provider value={{ inventory, addStock, updateStock, deleteStock, orders, addOrder, searchQuery, setSearchQuery }}>
+    <DataContext.Provider value={{ 
+      inventory, addStock, updateStock, deleteStock, 
+      orders, addOrder, 
+      sales, addSale, deleteSale, 
+      expenses, addExpense, deleteExpense, 
+      searchQuery, setSearchQuery 
+    }}>
       {children}
     </DataContext.Provider>
   );
